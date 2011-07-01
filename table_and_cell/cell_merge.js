@@ -1,0 +1,1 @@
+﻿var doc=app.documents.add();doc.textFrames.add({geometricBounds:[20,20,100,100]});var table=doc.textFrames[0].tables.add();table.bodyRowCount=16;table.columnCount=4;for(var i=0; i<table.rows.length-1; i++){	try{	table.rows[i].cells[3].merge(table.rows[i+1].cells[3]);	}	catch(e){}	}	if(e.length>0){alert("失敗しました")}
