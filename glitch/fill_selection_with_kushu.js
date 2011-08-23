@@ -50,9 +50,8 @@ function main(docObj, selObj, per){
 	var sHeight=selGBon[2]-selGBon[0]+2*offSetMargin;
 	//最小限の本数で濃度を出すための計算
 	var kushValue=2*Math.floor(per/100*(sWidth*sHeight)/(Math.max(sWidth, sHeight)*lineThickness));
-	$.writeln(kushValue)
 	if(selObj.pageItems.length==1){
-		selObj.pageItems[0].remove()
+		selObj.pageItems[0].remove();
 		}
 	var ppArr=new Array();
 	for(var i=0; i < kushValue; i++){
