@@ -109,7 +109,6 @@ var rulerBk=doc.viewPreferences.rulerOrigin;
 var rulerTemp=RulerOrigin.SPREAD_ORIGIN;
 doc.viewPreferences.rulerOrigin=rulerTemp;
 var page=doc.pages.itemByName(sel.parent.appliedSection.name+sel.parent.name);
-$.writeln(sel.parent.appliedSection.name)
 var pi=Math.PI/180;//degree to radian
 
 var moArray=new Array();
