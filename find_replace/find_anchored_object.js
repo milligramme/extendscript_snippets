@@ -28,7 +28,6 @@ function find_anchored_obj (target_obj) {
 
 function find_grep(target_obj, find_txt_obj){
   app.findGrepPreferences   = NothingEnum.nothing;
-  app.changeGrepPreferences = NothingEnum.nothing;
 
   with(app.findChangeGrepOptions){
     includeFootnotes            = true;
@@ -41,8 +40,8 @@ function find_grep(target_obj, find_txt_obj){
   }
   app.findGrepPreferences.properties = find_txt_obj;
   var result = target_obj.findGrep();
+
   app.findGrepPreferences   = NothingEnum.nothing;
-  app.changeGrepPreferences = NothingEnum.nothing;
   return result;
 }
 
