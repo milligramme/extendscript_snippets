@@ -38,7 +38,7 @@ var cl_name     = "Gate";     // セルスタイル
 var ob_name     = "Anchored"  // オブジェクトスタイル
 var swatch_name = "Amber";    // スウォッチ
 
-var p_style    = doc.paragraphStyles;　// 段落スタイル
+var p_style    = doc.paragraphStyles; // 段落スタイル
 var c_style    = doc.characterStyles; // 文字スタイル
 var tb_style   = doc.tableStyles;     // 表スタイル
 var cl_style   = doc.cellStyles;      // セルスタイル

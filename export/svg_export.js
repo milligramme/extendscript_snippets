@@ -37,7 +37,7 @@ with(app.svgExportPreferences){
 		//StyleFormat.ENTITY スタイル属性（構成要素参照）
 		
 	realPrecision=3;//小数点割り付け
-		//1-7　大きいほど、画質がよくなり、ファイルサイズが大きくなる
+    // 1-7 大きいほど、画質がよくなり、ファイルサイズが大きくなる
 		
 	fileEncoding=FileEncoding.UTF8;//エンコーディング
 		//FileEncoding.ASCII

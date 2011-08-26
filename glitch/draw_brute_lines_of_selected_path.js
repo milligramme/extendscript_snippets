@@ -35,9 +35,9 @@ for(var a=1; a < selPathPointArr.length-1; a++){
 	brute+=selPathPointArr.length-a;
 	}
 $.localize = true;
-var precheck　=　{ja: brute+"本の総当たり線を引きます、続行してもいいですか?", en: "draw brute lines of "+brute+" , ok to continue?"};
-var cont　=　confirm(precheck);
-if(cont　==　false){
+var precheck = {ja: brute+"本の総当たり線を引きます、続行してもいいですか?", en: "draw brute lines of "+brute+" , ok to continue?"};
+var cont = confirm(precheck);
+if(cont == false){
 	alert({ja:"中止しました。",en:"canceled"});
 	exit();
 }

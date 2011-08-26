@@ -6,7 +6,7 @@
 #target "InDesign"
 
 var fon = app.fonts;
-var draw_area = 50; //描写領域　50 x 50
+var draw_area = 50; //描写領域 50 x 50
 var layered = 12; //レイヤー数
 var page_len = 40; //ページ数 = パターンの数
 var max_range = 36; //max size = min size(9) + max_range あまり大きすぎると描写領域に対してサンプルテキストが割り付けられない
