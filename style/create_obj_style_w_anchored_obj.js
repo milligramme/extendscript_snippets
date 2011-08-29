@@ -51,13 +51,13 @@ function createObjStyl (doc, objStyleName) {
 		spineRelative = false;//ノド元を基準（カスタム/行の上）
 
 		anchorPoint = AnchorPoint.CENTER_ANCHOR;
-			//アンカー付き位置　基準点（カスタム）
+			//アンカー付き位置 基準点（カスタム）
 			//TOP_CENTER_ANCHOR //TOP_LEFT_ANCHOR //TOP_RIGHT_ANCHOR
 			//CENTER_ANCHOR //LEFT_ANCHOR //RIGHT_ANCHOR
 			//BOTTOM_CENTER_ANCHOR //BOTTOM_LEFT_ANCHOR //BOTTOM_RIGHT_ANCHOR
 
 		horizontalAlignment = HorizontalAlignment.CENTER_ALIGN;
-			//揃え（行の上）　ノド元に〜〜はspineRelative = true と併用する
+			//揃え（行の上） ノド元に〜〜はspineRelative = true と併用する
 			//CENTER_ALIGN //LEFT_ALIGN //RIGHT_ALIGN //TEXT_ALIGN
 			
 		verticalAlignment = VerticalAlignment.CENTER_ALIGN;
@@ -66,12 +66,12 @@ function createObjStyl (doc, objStyleName) {
 			//BOTTOM_ALIGN //CENTER_ALIGN //TOP_ALIGN
 			
 		horizontalReferencePoint = AnchoredRelativeTo.COLUMN_EDGE;
-			//アンカー付き位置　X基準（カスタム）
+			//アンカー付き位置 X基準（カスタム）
 			//ANCHOR_LOCATION //COLUMN_EDGE //PAGE_EDGE 
 			//PAGE_MARGINS //TEXT_FRAME
 
 		verticalReferencePoint = VerticallyRelativeTo.COLUMN_EDGE;
-			//アンカー付き位置　Y基準（カスタム）
+			//アンカー付き位置 Y基準（カスタム）
 			//CAPHEIGHT //COLUMN_EDGE
 			//LINE_ASCENT //LINE_BASELINE //LINE_XHEIGHT
 			//PAGE_EDGE //PAGE_MARGINS 

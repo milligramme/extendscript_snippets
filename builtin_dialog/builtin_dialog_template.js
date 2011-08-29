@@ -1,107 +1,160 @@
-var myDialog=app.dialogs.add({name:"test", canCancel: true});
+/**
+ * InDesign Builtin Dialog Sample 
+ */
+var dialog_obj = app.dialogs.add({name:"Builtin Dialog Test", canCancel: true});
 
-with(myDialog){
-	with(dialogColumns.add()){//outline
-		
-		with(borderPanels.add()){//text edit box
-			with(dialogColumns.add()){
-				staticTexts.add({staticLabel: "Message"});
-				}
-			with(dialogColumns.add()){
-				var myTextEditField = textEditboxes.add({editContents: "hello", minWidth: 140});
-				}
-			}//text edit box
-		
-		with(borderPanels.add()){//measurement edit box
-			with(dialogColumns.add()){
-				staticTexts.add({staticLabel: "pointsize"});
-				}
-			with(dialogColumns.add()){
-				var myPointSizeField = measurementEditboxes.add({editValue: 72});
-				}
-			}//measurement edit box
-		
-		with(borderPanels.add()){//dropdown
-			with(dialogColumns.add()){
-				staticTexts.add({staticLabel: "dropdown"});
-				}
-			with(dialogColumns.add){
-				var myVerticalJustificationMenu = dropdowns.add({stringList: ["Top","Center","Bottom"],selectedIndex: 0});
-				}
-			}//dropdown
-		
-		with(borderPanels.add()){//radio button
-			with(dialogColumns.add()){
-				staticTexts.add({staticLabel: "radio button"});
-				var myRadioButtonGroup = radiobuttonGroups.add();
-				with (myRadioButtonGroup){
-					var LeftRadioButton=radiobuttonControls.add({staticLabel: "Left", checkedState:true});
-					var CenterRadioButton= radiobuttonControls.add({staticLabel: "Center"});
-					var RightRadioButton = radiobuttonControls.add({staticLabel: "Right"});
-					}
-				}
-			}//radio button
-	
-		with(borderPanels.add()){//check box
-			with(dialogColumns.add()){
-				staticTexts.add({staticLabel: "check box"});
-				}
-			//var myCheckEnablingGroup=enablingGroups.add({staticLabel:"all", checkedState:false});
-			//with(myCheckEnablingGroup){
-			with(dialogColumns.add()){
-				var Checkbox1 = checkboxControls.add({staticLabel:"1abcde", checkedState:true});
-				var Checkbox2 = checkboxControls.add({staticLabel:"2", checkedState:false});
-				var Checkbox3 = checkboxControls.add({staticLabel:"3", checkedState:true});
-				}
-			}//check box
-			
-		with(borderPanels.add()){//measurment combo box
-			with(dialogColumns.add()){
-				staticTexts.add({staticLabel: "measurment combo box"});
-				}
-			with(dialogColumns.add){
-				var myPintoMenu = measurementComboboxes.add({stringList: ["3.5","5","8"],editValue:3.5});
-				}
-			}//measurment combo box
-			
-		with(borderPanels.add()){//integer combo box
-			with(dialogColumns.add()){
-				staticTexts.add({staticLabel: "integer combo box"});
-				}
-			with(dialogColumns.add){
-				var myTexMenu = integerEditboxes.add({stringList: ["4","8","0"],editValue:8});
-				}
-			}//integer combo box
-			
-	}//outline
-}//dialog
-		if(myDialog.show()==true){
-			var myParagraphAlignment, myString, myPointSize, myVerticalJustification;
-			
-			myString = myTextEditField.editContents;
-			myPointSize = myPointSizeField.editValue;
-			if(myVerticalJustificationMenu.selectedIndex == 0){
-				myVerticalJustification = VerticalJustification.TOP_ALIGN;
-			}
-			else if(myVerticalJustificationMenu.selectedIndex == 1){
-				myVerticalJustification = VerticalJustification.CENTER_ALIGN;
-			}               
-			else{               
-				myVerticalJustification = VerticalJustification.BOTTOM_ALIGN;
-			}               
-			                    
-			if(myRadioButtonGroup.selectedButton == 0){
-				myParagraphAlignment = Justification.LEFT_ALIGN;
-			}               
-			else if(myRadioButtonGroup.selectedButton == 1){
-				myParagraphAlignment = Justification.CENTER_ALIGN;
-			}               
-			else{               
-				mayParagraphAlignment = Justification.RIGHT_ALIGN;
-			}
-			myDialog.destroy();
-			//function here
-		}
-		else{
-			myDialog.destroy();
-			}
+with (dialog_obj){
+  with (dialogColumns.add()){
+    // ########### テキスト入力フィールド
+    with (borderPanels.add()){
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "テキスト入力フィールド"});
+      }
+      with (dialogColumns.add()){
+        var text_edit_box = textEditboxes.add({
+          editContents: "こんにちは",
+          minWidth: 140 // フィールドの最小幅
+          });
+      }
+    }
+    // ########### 実数・整数値入力フィールド（↑↓で増減する）
+    with (borderPanels.add()){
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "実数・整数値入力フィールド"});
+      }
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "実数："});
+        var real_edit_box = realEditboxes.add({
+          editValue: 0.1, // 増減値の初期値
+          largeNudge: 0.5, // シフト押しながらの↑↓カーソルキーでの増減
+          smallNudge: 0.1, // ↑↓カーソルキーでの増減
+          minimumValue: -100, // 最小値
+          maximumValue: 100 // 最大値
+        });
+      }
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "整数："});
+        var integer_edit_box = integerEditboxes.add({
+          editValue: 0,
+          largeNudge: 10,
+          smallNudge: 1,
+          minimumValue: -100,
+          maximumValue: 100
+        });
+      }
+    }
+    // ########### 単位付き入力フィールド　現在の単位系に換算される
+    with (borderPanels.add()){
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "単位付き入力フィールド"});
+      }
+      with (dialogColumns.add()){
+        var unit_edit_text = measurementEditboxes.add({
+          editValue: 1,
+          editUnits: MeasurementUnits.Q // 換算する単位系
+          });
+      }
+    }
+    // ########### ドロップダウンリスト
+    with (borderPanels.add()){//dropdown
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "ドロップダウンリスト"});
+      }
+      with (dialogColumns.add){
+        var dropdown_list = dropdowns.add({
+          stringList: ["松茸","竹輪","梅干"],// 文字列の配列
+          selectedIndex: 0, // 選択するindex
+          minWidth: 120
+          });
+      }
+    }
+    // ########### ラジオボタン
+    with (borderPanels.add()){
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "ラジオボタン"});
+      }
+      with (dialogColumns.add()){
+        var myRadioButtonGroup = radiobuttonGroups.add({});
+        with (myRadioButtonGroup){
+          var top_rb = radiobuttonControls.add({
+            staticLabel: "上",
+            checkedState:true, // radiobuttonGroups.selectedButtonと同じ
+            minWidth: 60
+            });
+          var center_rb = radiobuttonControls.add({staticLabel: "真ん中"});
+          var bottom_rb = radiobuttonControls.add({staticLabel: "下"});
+          selectedButton = 2;// radiobuttonControls.chechedStateと同じ
+          minWidth = 200
+        }
+      }
+    }
+    // ########### チェックボックス
+    with (borderPanels.add()){
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "チェックボックス"});
+      }
+      with (dialogColumns.add()){
+        var check_enabling_group = enablingGroups.add({
+          staticLabel:"まとめて", 
+          checkedState: false,
+          });
+        with (check_enabling_group){
+          with (dialogColumns.add()){
+            var checkbox_1 = checkboxControls.add({
+              staticLabel:"1", 
+              checkedState:true,
+              minWidth: 90
+              });
+            var checkbox_2 = checkboxControls.add({staticLabel:"2", checkedState:false});
+            var checkbox_3 = checkboxControls.add({staticLabel:"3", checkedState:true});
+          }
+        }
+        with (dialogColumns.add()){
+          var checkbox_4 = checkboxControls.add({staticLabel:"4", checkedState:true});
+          var checkbox_5 = checkboxControls.add({staticLabel:"5", checkedState:false});
+          var checkbox_6 = checkboxControls.add({staticLabel:"6", checkedState:false});
+        }
+      }
+    }
+    // ########### 単位付き入力用コンボボックス
+    with (borderPanels.add()){
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "単位付き入力用コンボボックス"});
+      }
+      with (dialogColumns.add){
+        var unit_combobox = measurementComboboxes.add({
+          stringList: ["1","2","3"],
+          editValue: 1,
+          editUnits: MeasurementUnits.MILLIMETERS,
+          largeNudge: 1,
+          smallNudge: 0.1,
+          minimumValue: 0,
+          maximumValue: 100
+          });
+      }
+    }
+    // ########### ％値入力用コンボボックス
+    with (borderPanels.add()){
+      with (dialogColumns.add()){
+        staticTexts.add({staticLabel: "％値入力用コンボボックス"});
+      }
+      with (dialogColumns.add){
+        var percent_combobox = percentComboboxes.add({
+          stringList: ["25","50","75","100"],
+          editValue: 75
+          });
+      }
+    }
+  }
+}
+
+if (dialog_obj.show() === true){
+
+  // set vars before destroy dlg
+
+  dialog_obj.destroy();
+  // do something
+}
+else {
+  dialog_obj.destroy();
+}

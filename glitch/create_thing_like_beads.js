@@ -38,7 +38,7 @@ seedOval.geometricBounds=[dHeight/2, dWidth/2, dHeight/2+2*startR, dWidth/2+2*st
 seedOval.strokeColor="None";
 seedOval.strokeWeight=0;
 seedOval.fillColor="Black";
-var seedCenter=[dWidth/2+startR, dHeight/2+startR]//x,y　最初のつぶのまんなか
+var seedCenter=[dWidth/2+startR, dHeight/2+startR]//x,y 最初のつぶのまんなか
 
 //オブジェクトと半径と中心座標を配列にしていく
 var familyG=new Array();

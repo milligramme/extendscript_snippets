@@ -7,10 +7,10 @@ var doc = app.documents.length === 0 ? app.documents.add() : app.documents[0];
 var doc_w = doc.documentPreferences.pageWidth;
 
 // Main
-var plt = new Window('palette',"Wave",　undefined);
+var plt = new Window('palette',"Wave", undefined);
 
 // Logger
-var log_plt = new Window('palette',"Log",　undefined);
+var log_plt = new Window('palette',"Log", undefined);
 var log = "";
 var log_edt       = log_plt.add('edittext',undefined, log, {multiline: true});
 var log_clear_btn = log_plt.add('button',undefined, "Clear");
@@ -19,7 +19,7 @@ log_edt.size = [240, 320];
 log_plt.show();
 // Mainパレットから、XXpx位置をずらす
 var bon = log_plt.bounds;
-var mov = 300; 
+var mov = 300;
 log_plt.bounds = [bon[0]+mov, bon[1], bon[2]+mov, bon[3]];
 
 plt.g = plt.add('group', undefined);
@@ -59,7 +59,7 @@ plt.show();
 
 function vector (array, pitch) {
 	var org = [0,0];
-	var grp_arr = [];	
+	var grp_arr = [];
 	for (var i=0; i < array.length; i++) {
 		var gl = doc.graphicLines.add({
 			geometricBounds : [org[1]+i*pitch, org[0], org[1]+i*pitch, org[0]+array[i]]

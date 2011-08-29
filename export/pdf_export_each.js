@@ -41,10 +41,10 @@ for(var i=0 ; i < pageObj.length; i++){
 		startP.push(i);
 		endP.push(i);
 	}
-}        	
+}
 //ページが連続する箇所の終了位置を設定
 //前にずらして、1ひく、最後に最終ページを追加。
-endP.shift();　
+endP.shift();
 for(var k=0; k < endP.length; k++){
 	endP[k] = endP[k]-1
 }
