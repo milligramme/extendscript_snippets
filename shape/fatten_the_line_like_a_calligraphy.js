@@ -1,16 +1,11 @@
 /**
 筆書きのように線をふとらせる
-"fatten the line like a calligraphy"
 
 使い方：
 ドキュメント上の線または楕円、四角形、多角形などを選んで実行（複数可能）。
 できるだけ3点以上で構成された図形の方が効果的。
 パスを複製してランダムな太さの線のようなものにします。
 
-動作確認：OS10.4.11 InDesign CS3
-
-milligramme
-www.milligramme.cc
 */
 //パラメーター
 //太さの目安、複製したパスの移動量（ランダム）
@@ -59,8 +54,8 @@ for (var i = 0; i < app.selection.length; i++){
 		var currentStrColor = selObj[i].strokeColor;
 		selObj[i].fillColor = currentStrColor;
 		selObj[i].strokeColor = "None";
-	}                   
-	else{               
+	}
+	else{
 		selObj[i].fillColor = "Black"
 	}
 	dupObj.remove();
