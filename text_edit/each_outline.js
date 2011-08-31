@@ -1,59 +1,51 @@
+var doc = app.documents[0];
+outline_each_char(doc, false);
+
 /**
-個別にテキストグラフィック化
-"create each text outlines"
+ * outline each character
+ * 
+ *  個別にテキストグラフィック化
+ * 
+ *  使い方：
+ *  テキストフレームまたは範囲選択して実行。
+ *  テキストフレーム内の各文字、選択範囲の各文字を個別にグラフィック化。
+ *  ちょっと位置をずらして複製します。
+ *  グラフィック化後のオブジェクトのオーバープリントは勝手にオフにします。
+ * 
+ * @param {Object} doc Document
+ * @param {Boolean} remove_org If true remove original text
+ */
+function outline_each_char (doc, remove_org) {
+  // selection check
+  if (doc.selection.length !== 1) {return};
+    var sel_obj = doc.selection[0];
+  if (sel_obj.constructor.name === "InsertionPoint") {return};
+  if (sel_obj.hasOwnProperty('baseline') || sel_obj.constructor.name === "TextFrame") {
+    var char_obj  = sel_obj.characters;
+    var outline_arr = [];
+    for (var i=0, iL=char_obj.length; i < iL ; i++) {
+      var outlined_obj;
+      // スペースなどの無形の字はエラーになるのではじく。
+      try{
+        outlined_obj = char_obj[i].createOutlines ( remove_org );
+      } catch(e){}
+      if (outlined_obj !== undefined) {
+        outline_arr.push( outlined_obj[0] );
+      }
+    }
+    for (var j=0, jL=outline_arr.length; j < jL ; j++) {
+      outline_arr[j].move(undefined,[2, 2]); // ずらしたくなければコメントアウト
+      //元の塗り色線色をバックアップ
+      var current_fill_color   = outline_arr[j].fillColor;
+      var current_stroke_color = outline_arr[j].strokeColor;
+      //オーバープリントオフにする処理、簡易版
+      outline_arr[j].fillColor   = "Paper";
+      outline_arr[j].fillColor   = current_fill_color;
+      outline_arr[j].strokeColor = "Paper";
+      outline_arr[j].strokeColor = current_stroke_color;
+    }
+    //グループ化しておく
+    doc.pages[0].groups.add(outline_arr);
+  };
 
-使い方：
-テキストフレームまたは範囲選択して実行。
-テキストフレーム内の各文字、選択範囲の各文字を個別にグラフィック化。
-ちょっと位置をずらして複製します。
-グラフィック化後のオブジェクトのオーバープリントは勝手にオフにします。
-
-動作確認：OS10.4.11 InDesign CS3
-
-milligramme(mg)
-www.milligramme.cc
-*/      
-
-var docObj = app.documents[0];
-var selObj = docObj.selection[0]
-switch(selObj.constructor.name){
-	case "Word":
-	case "Character":
-	case "TextStyleRange":
-	case "Line":
-	case "Text":
-	case "Paragraph":
-	case "TextColumn":
-	case "TextFrame": break;
-	default : 
-		$.writeln("exit because of excluded object");
-		exit();
-	}
-var charObj  = selObj.characters;
-var outTxArr = new Array();
-
-for(i=0; i < charObj.length; i++){
-	var outTex;
-	//スペースなどの無形の字はエラーになるのではじく。
-	try{
-		outTex = charObj[i].createOutlines (false)
-		}catch(e){}
-	if(outTex !== undefined){
-		outTxArr.push(outTex[0]);
-		}
-	}
-
-for(j=0; j < outTxArr.length; j++){
-	
-	outTxArr[j].move(undefined,[2, 2]); //ずらしたくなければコメントアウト
-	//元の塗り色線色をバックアップ
-	var currentFillColor   = outTxArr[j].fillColor;
-	var currentStrokeColor = outTxArr[j].strokeColor;
-	//オーバープリントオフにする処理、簡易版
-	outTxArr[j].fillColor   = "Paper";
-	outTxArr[j].fillColor   = currentFillColor;
-	outTxArr[j].strokeColor = "Paper";
-	outTxArr[j].strokeColor = currentStrokeColor;
-	}
-//グループ化しておく
-docObj.pages[0].groups.add(outTxArr);
+}

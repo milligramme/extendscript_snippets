@@ -1,7 +1,7 @@
 /*
 Close all documents with saving
 for Photoshop, Illustrator, InDesign
-*/ 
+*/
 switch(app.name){
 	case "Adobe Photoshop":
 	case "Adobe Illustrator":
@@ -17,17 +17,17 @@ switch(app.name){
 		}
 	}
 	break;
-	
+
 	case "Adobe InDesign":
 	while (app.documents.length > 0){
 		var doc = app.documents[0];
 		if (has_fullpath (doc)) {
-			doc.close(SaveOptions.yes);			
-		} 
+			doc.close(SaveOptions.yes);
+		}
 		else {
 			// alert("Document doesn't saved yet. Saving document was canceled");
 			saved  = doc.save();
-			$.writeln(saved.name);
+      // $.writeln(saved.name);
 			if (saved) {
 				doc.close();
 			}
@@ -35,7 +35,7 @@ switch(app.name){
 				exit();
 			};
 		}
-	}; 
+	};
 	break;
 }
 

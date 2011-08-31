@@ -1,0 +1,3 @@
+## clone with submodule
+cd /path/to/anywhere
+git clone --recursive git://github.com/milligramme/extendscript_snippets.git
