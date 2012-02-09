@@ -1,3 +1,6 @@
 ## clone with submodule
 cd /path/to/anywhere
 git clone --recursive git://github.com/milligramme/extendscript_snippets.git
+
+## update all submodules at onece
+git submodule foreach 'git checkout master; git pull origin master'
