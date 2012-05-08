@@ -1,3 +1,0 @@
-[submodule "env/swriteln"]
-	path = env/swriteln
-	url = git@github.com:milligramme/swriteln.git
