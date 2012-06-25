@@ -79,15 +79,15 @@ function set_cells_size (selObj, cellColumn, cellRow) {
 
   if(flg == true){
     for (var iw=0; iw < wArr.length; iw++) {
-      if (eval(wArr[iw].text)*1 > 1) {
+      if (eval(wArr[iw].text)*1 > 0) {
         selObj.columns[iw].width = eval(wArr[iw].text) * 1;
       }
   	}
     for (var ih=0; ih < hArr.length; ih++) {
-      if (eval(hArr[ih].text)*1 > 1) {
+      if (eval(hArr[ih].text)*1 > 0) {
+        selObj.rows[ih].autoGrow = false;
         selObj.rows[ih].height = eval(hArr[ih].text) * 1;
       }
     }
   }
-  
 }
