@@ -37,7 +37,7 @@ function export_tagged_text_and_putback (story, method) {
     case "h_k_up": src = hira_kata_upcase (a_arr); break;
     // case "h2k": Do_something; break;
     // case "k2h": Do_something; break;
-    default: ; bread;
+    default: ; break;
   }
 
   var rev_file = File(path+"/_rest.txt");
