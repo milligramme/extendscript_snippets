@@ -1,31 +1,38 @@
 //選択オブジェクトのテキスト連結解除する
-var sel=app.selection;
+var unlink_textframe = function() {
+  if (app.documents.length === 0) {return};
+  if (app.selection.length === 0) {return};
 
-unlinkTextFrame(sel);
+  var sel = app.selection;
+  unlink_textframe(sel);
 
-function unlinkTextFrame(sel){
-for(var i=0, iL=sel.length; i < iL; i++){
-	switch(sel[i].constructor.name){
-		case "InsertionPoint": 
-		case "Character":
-		case "Word":
-		case "TextStyleRange":
-		case "Line":
-		case "Paragraph":
-		case "TextColumn":
+  function unlink_textframe(sel){
+    for(var i=0, iL=sel.length; i < iL; i++){
+      switch(sel[i].constructor.name){
+        case "InsertionPoint": 
+        case "Character":
+        case "Word":
+        case "TextStyleRange":
+        case "Line":
+        case "Paragraph":
+        case "TextColumn":
 
-		case "TextFrame":
-			var targetFrame=sel[i].parentStory.textContainers;
-			for(var j=targetFrame.length-1; j >0; j--){
-				targetFrame[j].previousTextFrame=NothingEnum.NOTHING;
-				}
-			break;
+        case "TextFrame":
+          var target_frame = sel[i].parentStory.textContainers;
+          for(var j = target_frame.length-1; j >0; j--){
+            target_frame[j].previousTextFrame=NothingEnum.NOTHING;
+          }
+          break;
 
-		case "Group":
-			unlinkTextFrame(sel[i].textFrames);
-			break;
+        case "Group":
+          arguments.callee(sel[i].textFrames);
+          break;
 
-		default: break;
-		}
-	}
-}
+        default: break;
+      }
+    }
+  }
+};
+
+// run
+unlink_textframe();
