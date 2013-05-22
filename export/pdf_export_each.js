@@ -1,64 +1,101 @@
 /*
 ここからここまでバラPDF書き出し
 "export PDFs with my range"
-
 使い方：
 PDF名にしたい内容が書いてあるテキストフレームにスクリプトラベルをいれておきます。
 次のスクリプトラベルが発生するまでの範囲でPDF書き出していきます。
 PDF書出しプリセット「Sample」を使用しますので適当に変更してください。
-
 milligramme
 www.milligramme.cc
 */
-//おまじない
-app.scriptPreferences.userInteractionLevel = UserInteractionLevels.interactWithAll;
 
-//スクリプトラベルとPDF書き出しプリセットを設定
-var scriptLbl = "NUMBLE_MARKER";
-var pdfPreset = "SAMBEL";
-
-if(app.documents.length == 0){
-	alert("open a document and try again");
-	exit();
+var export_each_pdf_with_range = function (doc) {
+  var doc = doc;
+  var page = doc.pages;
+  
+  var pdf_preset = app.pdfExportPresets.item(PDF_PRESET);
+  if (!check_named_item(pdf_preset)) {
+    alert("PDFプリセット \'" + PDF_PRESET + "\' がありません");
+    return
+  }
+  
+  var start_pages = [];
+  var pdf_names   = [];
+  
+  // スクリプトラベルから情報をぬく
+  for (var pi=0, piL=page.length; pi < piL ; pi++) {
+    var tf = page[pi].textFrames;
+    for (var ti=0, tiL=tf.length; ti < tiL ; ti++) {
+      // itemByName(LABEL)は使えなくなった
+      if (tf[ti].label === LABEL) {
+        // ラベルの文字列無い場合ページ名にする
+        var cont = tf[ti].contents == "" ? "page"+page[pi].name : tf[ti].contents;
+        pdf_names.push(cont.replace(/\:/g,"_")+".pdf");
+        start_pages.push(pi + 1);
+      }
+      else {
+        continue;
+      }
+    };
+  };
+  // スクリプトラベルがない場合は1をいれる
+  if (start_pages.length == 0) {
+    start_pages.push(1);
+  }
+  
+  var page_range = get_page_range(start_pages, page.length);
+  export_pdf(doc, page_range, pdf_names, pdf_preset);
 }
-var docObj        = app.documents[0];
-var pageObj       = docObj.pages;
-var myPDFexPreset = app.pdfExportPresets.item(pdfPreset);
 
-//開始・終了位置とPDF名
-var startP = new Array();
-var endP   = new Array();
-var nameP  = new Array();
+var export_pdf = function (doc, page_range /*Array*/, pdf_names /*Array*/, pdf_preset) {
+	var dest = Folder.selectDialog("書き出すフォルダを選択");
+  if (dest !== null) {
+    for (var pri=0, priL=page_range.length; pri < priL ; pri++) {
+      app.pdfExportPreferences.pageRange = page_range[pri];
+      var pdf_file = new File(dest + "/" + pdf_names[pri]);
+      doc.exportFile(ExportFormat.pdfType, pdf_file, false, pdf_preset);
+    };
+  }
+  else {
+    alert("書き出し先を指定してません");
+  }
+}
 
-for(var i=0 ; i < pageObj.length; i++){
-//スクリプトラベルのあるテキストフレームが開始位置の配列
-	var scrL = pageObj[i].textFrames.itemByName(scriptLbl);
-	if(scrL == null){
-		continue;
-	}
-	else {
-		nameP.push(scrL.contents.replace(":","_") + ".pdf");
-		startP.push(i);
-		endP.push(i);
-	}
+var get_page_range = function (ary, lastpage) {
+  var ret = [];
+  // ページ範囲に + をつけて絶対ページで指定
+  for (var i=0, iL=ary.length-1; i < iL ; i++) {
+    ret.push("+" + ary[i] + "-+"+(ary[i+1]-1))
+  };
+  ret.push("+" + ary[ary.length-1] + "-+" + lastpage);
+  return ret;
 }
-//ページが連続する箇所の終了位置を設定
-//前にずらして、1ひく、最後に最終ページを追加。
-endP.shift();
-for(var k=0; k < endP.length; k++){
-	endP[k] = endP[k]-1
-}
-endP.push(pageObj.length);
 
-var myFolder = Folder.selectDialog("Choose a Folder to export");
-if(myFolder != null){
-	for(j=0; j < startP.length ; j++){
-		//"1-3"など書き出し範囲を設定、単ページも"6-6"となるけど大丈夫みたい。
-		var pRange = pageObj[startP[j]].name + "-" + pageObj[endP[j]].name;
-		app.pdfExportPreferences.pageRange = pRange;
-		var myFilePath = myFolder + "/" + nameP[j]
-		var myFile = new File(myFilePath);
-		docObj.exportFile(ExportFormat.pdfType,myFile,false,myPDFexPreset);
-	}
+var check_named_item = function (obj) {
+  var ret = true
+  try {
+    obj.name;
+  }
+  catch(e){
+    return false
+  }
+  return ret
 }
-alert("completed");
+
+
+// run
+if (new File($.fileName).name==$.stack.replace(/[\[\]\n]/g,"")) {
+  var PDF_PRESET = "Sample";
+  var LABEL      = "Kokokara";
+
+  app.scriptPreferences.userInteractionLevel = UserInteractionLevels.interactWithAll;
+  if (app.documents.length === 0) {
+    alert("ドキュメントをひらいてください");
+    exit();
+  }
+  else {
+    export_each_pdf_with_range(app.documents[0]);
+    alert("終了");
+  }
+}
+
